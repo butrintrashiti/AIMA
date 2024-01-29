@@ -14,7 +14,7 @@ services:
   postgres:
     image: 'postgres:latest'
     environment:
-      POSTGRES_DB: "db"
+      POSTGRES_DB: "aima"
       POSTGRES_HOST_AUTH_METHOD: "trust"
     ports:
-      - '5430:5430'
+      - '5430:5432'
