@@ -1,13 +1,16 @@
-import express, { Express, Request, Response } from "express";
+import 'reflect-metadata';
 import dotenv from "dotenv";
+import { Container } from 'typedi';
+import { useContainer, createExpressServer } from 'routing-controllers';
+import { ProductsController } from './controllers/products.controller';
 
 dotenv.config();
-
-const app: Express = express();
+useContainer(Container);
 const port = process.env.PORT || 3000;
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Express + TypeScript Server");
+
+const app = createExpressServer({
+  controllers: [ProductsController],
 });
 
 app.listen(port, () => {
