@@ -8,13 +8,19 @@ services:
       - '3005:3005'
     environment:
       NODE_ENV: 'production'
+      PG_HOST: aima-postgres
+      PG_PASS: "12345"
+    links:
+      - postgres
     depends_on:
       - postgres
 
   postgres:
-    image: 'postgres:latest'
+    image: postgres:latest
+    container_name: aima-postgres
     environment:
-      POSTGRES_DB: "aima"
-      POSTGRES_HOST_AUTH_METHOD: "trust"
+      POSTGRES_DB: ${PGDATABASE}
+      POSTGRES_USER: ${PGUSER}
+      POSTGRES_PASSWORD: ${PGPASS}
     ports:
-      - '5430:5432'
+      - "5431:5432"
