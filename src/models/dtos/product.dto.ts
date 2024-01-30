@@ -1,5 +1,5 @@
 import { IsNotEmpty, IsNumber, Min, IsString, IsOptional } from 'class-validator';
-import { User } from '../../entity/User';
+import { UserDto } from './user.dto';
 
 export class ProductDto {
     @IsNotEmpty()
@@ -25,5 +25,5 @@ export class ProductDto {
     stock_quantity!: number;
 
     @IsOptional()
-    supplier!: User;
+    supplier!: UserDto;
 }
