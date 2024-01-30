@@ -25,7 +25,4 @@ export class User {
 
     @Column()
     email!: string
-
-    @Column()
-    phone: string
 }
