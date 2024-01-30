@@ -1,10 +1,10 @@
 import { Body, Delete, Get, HttpCode, HttpError, JsonController, Param, Post, Put } from "routing-controllers";
 import { Inject, Service } from "typedi";
-import { CreateProductDto } from "../models/Product/create-product-dto.model";
+import { CreateProductDto } from "../models/dtos/create-product.dto";
 import { ProductService } from "../services/product.service";
-import { ProductDTO } from "../models/Product/product-dto.model";
+import { ProductDto } from "../models/dtos/product.dto";
 import { DeleteResult, UpdateResult } from "typeorm";
-import { UpdateProductDto } from "../models/Product/update-product-dto.model";
+import { UpdateProductDto } from "../models/dtos/update-product.dto";
 
 @JsonController('/products')
 @Service()
@@ -14,7 +14,7 @@ export class ProductsController {
     constructor() {}
 
     @Get()
-    async getAll(): Promise<ProductDTO[] | HttpError> {
+    async getAll(): Promise<ProductDto[] | HttpError> {
         return this.productsService.getAll();
     }
 
@@ -24,7 +24,7 @@ export class ProductsController {
     }
 
     @Post()
-    async create(@Body() createProductDto: CreateProductDto): Promise<ProductDTO | HttpError> {
+    async create(@Body() createProductDto: CreateProductDto): Promise<ProductDto | HttpError> {
         return this.productsService.create(createProductDto);
     }
 

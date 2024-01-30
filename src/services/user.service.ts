@@ -1,20 +1,20 @@
 import { Service } from "typedi";
-import { CreateProductDto } from "../models/dtos/create-product.dto";
-import { Product } from "../entity/Product";
+import { CreateUserDto } from "../models/dtos/create-user.dto";
+import { User } from "../entity/User";
 import { HttpError } from "routing-controllers";
 import { AppDataSource } from "../data-source";
 import { QueryFailedError } from "typeorm";
-import { UpdateProductDto } from "../models/dtos/update-product.dto";
+import { UpdateUserDto } from "../models/dtos/update-user.dto";
 
 @Service()
-export class ProductService {
-    private readonly Product = AppDataSource.getRepository(Product);
+export class UserService {
+    private readonly User = AppDataSource.getRepository(User);
 
     async getAll() {
         try {
-            const allProducts = await this.Product.find();
+            const allUsers = await this.User.find();
 
-            return allProducts;
+            return allUsers;
         } catch(e: QueryFailedError | any) {
             return new HttpError(500, e.message);
         }
@@ -22,31 +22,31 @@ export class ProductService {
 
     async get(id: number) {
         try {
-            const product = await this.Product.findOneBy({ id });
+            const user = await this.User.findOneBy({ id });
 
-            if (!product) {
-                return new HttpError(404, "Product not found!");
+            if (!user) {
+                return new HttpError(404, "User not found!");
             }
 
-            return product;
+            return user;
         } catch(e: QueryFailedError | any) {
             return new HttpError(500, e.message);
         }
     }
 
-    async create(createProductDto: CreateProductDto) {
+    async create(createUserDto: CreateUserDto) {
         try {
-            const newProduct = await this.Product.save(createProductDto);
+            const newUser = await this.User.save(createUserDto);
 
-            return newProduct;
+            return newUser;
         } catch(e: QueryFailedError | any) {
             return new HttpError(500, e.message);
         }
     }
 
-    async update(id: number, updateProductDto: UpdateProductDto) {
+    async update(id: number, updateUserDto: UpdateUserDto) {
         try {
-            const updatedResult = await this.Product.update({ id }, updateProductDto);
+            const updatedResult = await this.User.update({ id }, updateUserDto);
 
             return updatedResult;
         } catch(e: QueryFailedError | any) {
@@ -56,7 +56,7 @@ export class ProductService {
 
     async delete(id: number) {
         try {
-            const deletedResult = await this.Product.delete({ id });
+            const deletedResult = await this.User.delete({ id });
 
             return deletedResult;
         } catch (e: QueryFailedError | any) {

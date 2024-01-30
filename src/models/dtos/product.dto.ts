@@ -1,7 +1,7 @@
 import { IsNotEmpty, IsNumber, Min, IsString, IsOptional } from 'class-validator';
-import { User } from '../../entity/User'; // Assuming User is your supplier entity
+import { User } from '../../entity/User';
 
-export class ProductDTO {
+export class ProductDto {
     @IsNotEmpty()
     @IsNumber()
     id!: number;
