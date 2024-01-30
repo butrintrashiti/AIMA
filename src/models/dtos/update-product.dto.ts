@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, IsNumber, Min, IsOptional } from 'class-validator';
+import { IsString, IsNumber, Min, IsOptional } from 'class-validator';
 import { Product } from '../../entity/Product';
 
 export class UpdateProductDto implements Partial<Product> {

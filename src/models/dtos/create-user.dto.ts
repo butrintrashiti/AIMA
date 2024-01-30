@@ -1,7 +1,7 @@
 import { IsNotEmpty, IsEmail, IsEnum } from 'class-validator';
-import { UserRole } from '../../entity/User'; // Replace with the actual path to your enum file
+import { User, UserRole } from '../../entity/User';
 
-export class CreateUserDto {
+export class CreateUserDto implements Partial<User> {
 
     @IsNotEmpty()
     @IsEnum(UserRole)

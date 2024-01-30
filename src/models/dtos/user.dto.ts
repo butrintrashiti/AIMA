@@ -1,10 +1,15 @@
-import { IsNotEmpty, IsEmail, IsEnum, IsNumber } from 'class-validator';
-import { UserRole } from '../../entity/User'; // Replace with the actual path to your enum file
+import { IsNotEmpty, IsEmail, IsEnum, IsNumber, IsUUID } from 'class-validator';
+import { UserRole } from '../../entity/User';
 
 export class UserDto {
     @IsNotEmpty()
     @IsNumber()
     id!: number
+
+
+    @IsNotEmpty()
+    @IsUUID()
+    uuid!: string;
 
     @IsNotEmpty()
     @IsEnum(UserRole)

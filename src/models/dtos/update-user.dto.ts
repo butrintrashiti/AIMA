@@ -1,5 +1,5 @@
 import { IsEmail, IsEnum, IsOptional, IsString } from 'class-validator';
-import { UserRole } from '../../entity/User'; // Replace with the actual path to your enum file
+import { UserRole } from '../../entity/User';
 
 export class UpdateUserDto {
     @IsOptional()
