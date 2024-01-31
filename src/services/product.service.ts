@@ -5,6 +5,7 @@ import { HttpError } from "routing-controllers";
 import { AppDataSource } from "../data-source";
 import { QueryFailedError } from "typeorm";
 import { UpdateProductDto } from "../models/dtos/update-product.dto";
+import { ProductDto } from "../models/dtos/product.dto";
 
 @Service()
 export class ProductService {
@@ -22,7 +23,7 @@ export class ProductService {
 
     async get(id: number) {
         try {
-            const product = await this.Product.findOneBy({ id });
+            const product = await this.Product.findOneByOrFail({ id });
 
             if (!product) {
                 return new HttpError(404, "Product not found!");

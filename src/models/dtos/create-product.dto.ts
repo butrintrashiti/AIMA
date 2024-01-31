@@ -1,7 +1,8 @@
 import { IsNotEmpty, IsString, IsNumber, Min, IsOptional } from 'class-validator';
 import { Product } from '../../entity/Product';
+import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 
-export class CreateProductDto implements Partial<Product> {
+export class CreateProductDto implements QueryDeepPartialEntity<Product> {
     @IsNotEmpty()
     @IsString()
     name!: string;

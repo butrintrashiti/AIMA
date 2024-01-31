@@ -1,9 +1,9 @@
-import { IsNotEmpty, IsEmail, IsEnum } from 'class-validator';
+import { IsNotEmpty, IsEmail, IsEnum, IsOptional } from 'class-validator';
 import { User, UserRole } from '../../entity/User';
 
 export class CreateUserDto implements Partial<User> {
 
-    @IsNotEmpty()
+    @IsOptional()
     @IsEnum(UserRole)
     role!: UserRole;
 

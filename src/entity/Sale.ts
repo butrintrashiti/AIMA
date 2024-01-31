@@ -1,15 +1,15 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToOne, JoinColumn } from "typeorm"
 import { Product } from "./Product"
 
-@Entity()
+@Entity('sales')
 export class Sale {
 
     @PrimaryGeneratedColumn()
     id!: number
 
     @OneToOne(() => Product)
-    @JoinColumn()
-    product!: Product
+    @JoinColumn({ name: 'productId', referencedColumnName: 'id' })
+    product!: Product;
 
     @Column()
     quantity!: number
@@ -17,7 +17,7 @@ export class Sale {
     @Column({ type: "float" })
     total_amount!: number
 
-    @Column({ type: 'timestamptz' })
+    @Column({ type: 'timestamptz', default: new Date })
     sale_date!: Date
 
     @CreateDateColumn()

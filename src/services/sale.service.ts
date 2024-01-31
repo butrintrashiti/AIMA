@@ -22,7 +22,7 @@ export class SaleService {
 
     async get(id: number) {
         try {
-            const sale = await this.Sale.findOneBy({ id });
+            const sale = await this.Sale.findOneByOrFail({ id });
 
             if (!sale) {
                 return new HttpError(404, "Sale not found!");

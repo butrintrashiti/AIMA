@@ -1,7 +1,8 @@
 import { IsString, IsNumber, Min, IsOptional } from 'class-validator';
 import { Product } from '../../entity/Product';
+import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 
-export class UpdateProductDto implements Partial<Product> {
+export class UpdateProductDto implements QueryDeepPartialEntity<Product> {
     @IsOptional()
     @IsString()
     name!: string;
@@ -21,5 +22,5 @@ export class UpdateProductDto implements Partial<Product> {
     stock_quantity!: number;
 
     @IsOptional()
-    supplierId?: number;
+    supplierId!: number;
 }

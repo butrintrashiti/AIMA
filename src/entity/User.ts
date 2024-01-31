@@ -1,10 +1,10 @@
 import { Entity, PrimaryGeneratedColumn, Column, Generated } from "typeorm"
 
 export enum UserRole {
-    SUPLIER = "suplier"
+    SUPPLIER = "supplier"
 }
 
-@Entity()
+@Entity('users')
 export class User {
 
     @PrimaryGeneratedColumn()
@@ -14,7 +14,7 @@ export class User {
     @Generated("uuid")
     uuid!: string
 
-    @Column({ type: "enum", enum: UserRole, default: UserRole.SUPLIER })
+    @Column({ type: "enum", enum: UserRole, default: UserRole.SUPPLIER, nullable: false })
     role!: UserRole
 
     @Column({ nullable: false })

@@ -1,6 +1,9 @@
-import { IsNotEmpty, IsInt, IsNumber, Min, IsDate } from 'class-validator';
+import { IsNotEmpty, IsInt, IsNumber, Min, IsDate, IsOptional } from 'class-validator';
+import { Sale } from '../../entity/Sale';
+import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
+import { Transform } from 'class-transformer';
 
-export class CreateSaleDto {
+export class CreateSaleDto implements QueryDeepPartialEntity<Sale>  {
 
     @IsNotEmpty()
     productId!: number;
@@ -14,7 +17,8 @@ export class CreateSaleDto {
     @IsNumber()
     total_amount!: number;
 
-    @IsNotEmpty()
+    @IsOptional()
+    @Transform( ({ value }) => new Date(value))
     @IsDate()
     sale_date!: Date;
 }

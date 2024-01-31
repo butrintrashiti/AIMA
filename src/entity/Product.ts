@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToOne, ManyToOne, JoinColumn } from "typeorm"
 import { User } from "./User";
 
-@Entity()
+@Entity('products')
 export class Product {
 
     @PrimaryGeneratedColumn()
@@ -20,6 +20,6 @@ export class Product {
     stock_quantity!: number;
 
     @OneToOne(() => User)
-    @JoinColumn()
+    @JoinColumn({ name: 'supplierId', referencedColumnName: 'id' })
     supplier!: User
 }

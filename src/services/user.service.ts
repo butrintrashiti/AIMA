@@ -22,7 +22,7 @@ export class UserService {
 
     async get(id: number) {
         try {
-            const user = await this.User.findOneBy({ id });
+            const user = await this.User.findOneByOrFail({ id });
 
             if (!user) {
                 return new HttpError(404, "User not found!");
