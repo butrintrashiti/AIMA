@@ -11,13 +11,16 @@ export class Sale {
     @JoinColumn({ name: 'productId', referencedColumnName: 'id' })
     product!: Product;
 
+    @Column({ type: 'int', nullable: false })
+    productId!: number;
+
     @Column()
     quantity!: number
 
     @Column({ type: "float" })
     total_amount!: number
 
-    @Column({ type: 'timestamptz', default: new Date })
+    @Column({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
     sale_date!: Date
 
     @CreateDateColumn()
