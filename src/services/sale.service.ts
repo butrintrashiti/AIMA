@@ -5,10 +5,12 @@ import { HttpError } from "routing-controllers";
 import { AppDataSource } from "../data-source";
 import { QueryFailedError } from "typeorm";
 import { UpdateSaleDto } from "../models/dtos/update-sale.dto";
+import { Product } from "../entity/Product";
 
 @Service()
 export class SaleService {
     private readonly Sale = AppDataSource.getRepository(Sale);
+    private readonly Product = AppDataSource.getRepository(Product);
 
     async getAll() {
         try {
@@ -36,7 +38,13 @@ export class SaleService {
 
     async create(createSaleDto: CreateSaleDto) {
         try {
-            const newSale = await this.Sale.save(createSaleDto);
+            const currProduct = await this.Product.findOneByOrFail({ id: createSaleDto.productId });
+            const total_amount = currProduct.price * createSaleDto.quantity;
+            const saleToBeSaved = { ...createSaleDto, total_amount: total_amount };
+
+            const newSale = await this.Sale.save(saleToBeSaved);
+
+            await this.Product.save({ ...currProduct, stock_quantity: currProduct.stock_quantity - createSaleDto.quantity });
 
             return newSale;
         } catch(e: QueryFailedError | any) {
@@ -46,7 +54,17 @@ export class SaleService {
 
     async update(id: number, updateSaleDto: UpdateSaleDto) {
         try {
-            const updatedResult = await this.Sale.update({ id }, updateSaleDto);
+            const currentSale = await this.Sale.findOneByOrFail({id});
+            const currProduct = await this.Product.findOneByOrFail({ id: currentSale.productId });
+            const total_amount = currProduct.price * updateSaleDto.quantity;
+            const saleToBeSaved = { ...updateSaleDto, total_amount: total_amount };
+            const updatedResult = await this.Sale.update({ id }, saleToBeSaved );
+
+            if (updatedResult?.affected && updateSaleDto.quantity != currentSale.quantity) {
+                const diffQuantity = updateSaleDto.quantity - currentSale.quantity;
+
+                await this.Product.save({ ...currProduct, stock_quantity: currProduct.stock_quantity - diffQuantity });
+            }
 
             return updatedResult;
         } catch(e: QueryFailedError | any) {

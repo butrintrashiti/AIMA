@@ -13,10 +13,6 @@ export class CreateSaleDto implements QueryDeepPartialEntity<Sale>  {
     @Min(1)
     quantity!: number;
 
-    @IsNotEmpty()
-    @IsNumber()
-    total_amount!: number;
-
     @IsOptional()
     @Transform( ({ value }) => new Date(value))
     @IsDate()

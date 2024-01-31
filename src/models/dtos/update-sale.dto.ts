@@ -14,10 +14,6 @@ export class UpdateSaleDto implements QueryDeepPartialEntity<Sale>  {
     quantity!: number;
 
     @IsOptional()
-    @IsNumber()
-    total_amount!: number;
-
-    @IsOptional()
     @Transform( ({ value }) => new Date(value))
     @IsDate()
     sale_date!: Date;
