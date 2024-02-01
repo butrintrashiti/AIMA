@@ -10,12 +10,14 @@ import { ReportsController } from './controllers/reports.controller';
 import { User } from './entity/User';
 import { Product } from './entity/Product';
 import { Sale } from './entity/Sale';
+import { AuthController } from './controllers/auth.controller';
+import { AuthMiddleware } from './middlewares/auth.middleware';
 
 dotenv.config();
 
 AppDataSource.initialize()
     .then(() => {
-      
+
     })
     .catch((error) => console.log(error));
 
@@ -31,7 +33,8 @@ const port = process.env.PORT || 3000;
 
 const app = createExpressServer({
   routePrefix: '/api/v1',
-  controllers: [ProductsController, UsersController, SalesController, ReportsController],
+  controllers: [ProductsController, UsersController, SalesController, ReportsController, AuthController],
+  middlewares: [AuthMiddleware]
 });
 
 app.listen(port, () => {
