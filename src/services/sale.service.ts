@@ -42,6 +42,10 @@ export class SaleService {
             const total_amount = currProduct.price * createSaleDto.quantity;
             const saleToBeSaved = { ...createSaleDto, total_amount: total_amount };
 
+            if (currProduct.stock_quantity < createSaleDto.quantity) {
+                return new HttpError(400, 'Not enough products in stock!');
+            }
+
             const newSale = await this.Sale.save(saleToBeSaved);
 
             await this.Product.save({ ...currProduct, stock_quantity: currProduct.stock_quantity - createSaleDto.quantity });
@@ -59,6 +63,10 @@ export class SaleService {
             const total_amount = currProduct.price * updateSaleDto.quantity;
             const saleToBeSaved = { ...updateSaleDto, total_amount: total_amount };
             const updatedResult = await this.Sale.update({ id }, saleToBeSaved );
+
+            if (currProduct.stock_quantity < updateSaleDto.quantity) {
+                return new HttpError(400, 'Not enough products in stock!');
+            }
 
             if (updatedResult?.affected && updateSaleDto.quantity != currentSale.quantity) {
                 const diffQuantity = updateSaleDto.quantity - currentSale.quantity;
