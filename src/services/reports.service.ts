@@ -1,12 +1,14 @@
-import { Service } from "typedi";
+import { Inject, Service } from "typedi";
 import { AppDataSource } from "../data-source";
 import { Product } from "../entity/Product";
 import { HttpError } from "routing-controllers";
 import { Sale } from "../entity/Sale";
+import { Repository } from "typeorm";
 
 @Service()
 export class ReportsService {
-    private readonly Product = AppDataSource.getRepository(Product);
+
+    constructor(@Inject("ProductRepository") private productRepository: Repository<Product>) {}
 
     async getProductsToRestock(): Promise<Product[] | HttpError> {
         try {
@@ -14,7 +16,7 @@ export class ReportsService {
             const startDate = new Date(endDate);
             startDate.setMonth(startDate.getMonth() - 1);
             
-            const productsNeedingRestock = await this.Product
+            const productsNeedingRestock = await this.productRepository
                 .createQueryBuilder('product')
                 .leftJoinAndSelect('product.supplier', 'supplier')
                 .leftJoin(Sale, 'sale', 'sale.productId = product.id')
@@ -33,7 +35,7 @@ export class ReportsService {
         
           return productsNeedingRestock;
         } catch (e: any) {
-            throw new HttpError(500, e.message);
+            return new HttpError(500, e.message);
         }
     }
 }

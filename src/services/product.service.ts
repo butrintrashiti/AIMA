@@ -2,7 +2,6 @@ import { Inject, Service } from "typedi";
 import { CreateProductDto } from "../models/dtos/create-product.dto";
 import { Product } from "../entity/Product";
 import { HttpError } from "routing-controllers";
-import { AppDataSource } from "../data-source";
 import { QueryFailedError, Repository } from "typeorm";
 import { UpdateProductDto } from "../models/dtos/update-product.dto";
 import { ProductDto } from "../models/dtos/product.dto";
