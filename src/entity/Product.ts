@@ -20,7 +20,7 @@ export class Product {
     @Column({ nullable: false, type: "int", default: 0 })
     stock_quantity!: number;
 
-    @OneToOne(() => User)
+    @ManyToOne(() => User)
     @JoinColumn({ name: 'supplierId', referencedColumnName: 'id' })
     supplier!: User
 

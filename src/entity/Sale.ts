@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToOne, JoinColumn } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToOne, JoinColumn, ManyToOne } from "typeorm"
 import { Product } from "./Product"
 
 @Entity('sales')
@@ -7,7 +7,7 @@ export class Sale {
     @PrimaryGeneratedColumn()
     id!: number
 
-    @OneToOne(() => Product)
+    @ManyToOne(() => Product)
     @JoinColumn({ name: 'productId', referencedColumnName: 'id' })
     product!: Product;
 

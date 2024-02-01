@@ -6,6 +6,7 @@ import { ProductsController } from './controllers/products.controller';
 import { AppDataSource } from './data-source';
 import { UsersController } from './controllers/users.controller';
 import { SalesController } from './controllers/sales.controller';
+import { ReportsController } from './controllers/reports.controller';
 
 dotenv.config();
 
@@ -18,7 +19,7 @@ useContainer(Container);
 const port = process.env.PORT || 3000;
 
 const app = createExpressServer({
-  controllers: [ProductsController, UsersController, SalesController],
+  controllers: [ProductsController, UsersController, SalesController, ReportsController],
 });
 
 app.listen(port, () => {
