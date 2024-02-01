@@ -1,14 +1,14 @@
-import { Service } from "typedi";
+import { Inject, Service } from "typedi";
 import { CreateUserDto } from "../models/dtos/create-user.dto";
 import { User } from "../entity/User";
 import { HttpError } from "routing-controllers";
 import { AppDataSource } from "../data-source";
-import { QueryFailedError } from "typeorm";
+import { QueryFailedError, Repository } from "typeorm";
 import { UpdateUserDto } from "../models/dtos/update-user.dto";
 
 @Service()
 export class UserService {
-    private readonly User = AppDataSource.getRepository(User);
+    constructor(@Inject("UserRepository") private User: Repository<User>) {}
 
     async getAll() {
         try {
@@ -20,7 +20,7 @@ export class UserService {
         }
     }
 
-    async get(id: number) {
+    async getById(id: number) {
         try {
             const user = await this.User.findOneByOrFail({ id });
 

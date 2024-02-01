@@ -1,19 +1,18 @@
-import { Service } from "typedi";
+import { Inject, Service } from "typedi";
 import { CreateProductDto } from "../models/dtos/create-product.dto";
 import { Product } from "../entity/Product";
 import { HttpError } from "routing-controllers";
 import { AppDataSource } from "../data-source";
-import { QueryFailedError } from "typeorm";
+import { QueryFailedError, Repository } from "typeorm";
 import { UpdateProductDto } from "../models/dtos/update-product.dto";
-import { ProductDto } from "../models/dtos/product.dto";
 
 @Service()
 export class ProductService {
-    private readonly Product = AppDataSource.getRepository(Product);
+    constructor(@Inject("ProductRepository") private productRepository: Repository<Product>) {}
 
     async getAll() {
         try {
-            const allProducts = await this.Product.find();
+            const allProducts = await this.productRepository.find();
 
             return allProducts;
         } catch(e: QueryFailedError | any) {
@@ -21,9 +20,9 @@ export class ProductService {
         }
     }
 
-    async get(id: number) {
+    async getById(id: number) {
         try {
-            const product = await this.Product.findOneByOrFail({ id });
+            const product = await this.productRepository.findOneByOrFail({ id });
 
             if (!product) {
                 return new HttpError(404, "Product not found!");
@@ -37,7 +36,7 @@ export class ProductService {
 
     async create(createProductDto: CreateProductDto) {
         try {
-            const newProduct = await this.Product.save(createProductDto);
+            const newProduct = await this.productRepository.save(createProductDto);
 
             return newProduct;
         } catch(e: QueryFailedError | any) {
@@ -47,7 +46,7 @@ export class ProductService {
 
     async update(id: number, updateProductDto: UpdateProductDto) {
         try {
-            const updatedResult = await this.Product.update({ id }, updateProductDto);
+            const updatedResult = await this.productRepository.update({ id }, updateProductDto);
 
             return updatedResult;
         } catch(e: QueryFailedError | any) {
@@ -57,7 +56,7 @@ export class ProductService {
 
     async delete(id: number) {
         try {
-            const deletedResult = await this.Product.delete({ id });
+            const deletedResult = await this.productRepository.delete({ id });
 
             return deletedResult;
         } catch (e: QueryFailedError | any) {
