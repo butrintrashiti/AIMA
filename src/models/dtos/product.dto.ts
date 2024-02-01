@@ -25,5 +25,8 @@ export class ProductDto {
     stock_quantity!: number;
 
     @IsOptional()
-    supplier!: UserDto;
+    supplier?: UserDto;
+
+    @IsOptional()
+    supplierId?: number;
 }

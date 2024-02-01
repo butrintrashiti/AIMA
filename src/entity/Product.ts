@@ -22,7 +22,10 @@ export class Product {
 
     @ManyToOne(() => User)
     @JoinColumn({ name: 'supplierId', referencedColumnName: 'id' })
-    supplier!: User
+    supplier!: User;
+
+    @Column({ type: 'int', nullable: false })
+    supplierId!: number;
 
     @OneToMany(type => Sale, sale => sale.product)
     sales!: Sale[];
