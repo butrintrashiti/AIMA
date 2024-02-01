@@ -5,6 +5,7 @@ import { HttpError } from "routing-controllers";
 import { AppDataSource } from "../data-source";
 import { QueryFailedError, Repository } from "typeorm";
 import { UpdateProductDto } from "../models/dtos/update-product.dto";
+import { ProductDto } from "../models/dtos/product.dto";
 
 @Service()
 export class ProductService {
@@ -20,13 +21,9 @@ export class ProductService {
         }
     }
 
-    async getById(id: number) {
+    async getById(id: number): Promise<ProductDto | HttpError> {
         try {
             const product = await this.productRepository.findOneByOrFail({ id });
-
-            if (!product) {
-                return new HttpError(404, "Product not found!");
-            }
 
             return product;
         } catch(e: QueryFailedError | any) {
