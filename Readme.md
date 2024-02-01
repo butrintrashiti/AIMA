@@ -9,7 +9,7 @@
 
 ## Endpoints:
     SWAGGER DOCS - http://localhost:3005/docs
-    IF not using swagger there is a collection included with postman with all endpoints
+    IF not using swagger there is a collection included with postman with all endpoints AIMA.postman_collection.json
 
 
 ## Complex query:
