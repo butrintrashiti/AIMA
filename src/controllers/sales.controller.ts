@@ -1,7 +1,7 @@
 
 import { Body, JsonController, Post, Get, Put, Delete, Param, HttpError } from 'routing-controllers';
 import { CreateSaleDto } from '../models/dtos/create-sale.dto';
-import { Inject, Service } from 'typedi';
+import {  Service } from 'typedi';
 import { SaleService } from '../services/sale.service';
 import { UpdateSaleDto } from '../models/dtos/update-sale.dto';
 import { SaleDto } from '../models/dtos/sale.dto';
@@ -10,9 +10,7 @@ import { DeleteResult, UpdateResult } from 'typeorm';
 @JsonController('/sales')
 @Service()
 export class SalesController {
-    @Inject() saleService!: SaleService;
-
-    constructor() {}
+    constructor(private saleService: SaleService) {}
 
     @Get()
     async getAll(): Promise<SaleDto[] | HttpError> {
@@ -21,7 +19,7 @@ export class SalesController {
 
     @Get('/:id')
     async getById(@Param('id') id: number) {
-        return this.saleService.get(id);
+        return this.saleService.getById(id);
     }
 
     @Post()

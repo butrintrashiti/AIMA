@@ -1,7 +1,7 @@
 
 import { Body, JsonController, Post, Get, Put, Delete, Param, HttpError } from 'routing-controllers';
 import { CreateUserDto } from '../models/dtos/create-user.dto';
-import { Inject, Service } from 'typedi';
+import { Service } from 'typedi';
 import { UserService } from '../services/user.service';
 import { UpdateUserDto } from '../models/dtos/update-user.dto';
 import { UserDto } from '../models/dtos/user.dto';
@@ -10,9 +10,7 @@ import { DeleteResult, UpdateResult } from 'typeorm';
 @JsonController('/users')
 @Service()
 export class UsersController {
-    @Inject() userService!: UserService;
-
-    constructor() {}
+    constructor(private userService: UserService) {}
 
     @Get()
     async getAll(): Promise<UserDto[] | HttpError> {
@@ -21,7 +19,7 @@ export class UsersController {
 
     @Get('/:id')
     async getById(@Param('id') id: number) {
-        return this.userService.get(id);
+        return this.userService.getById(id);
     }
 
     @Post()

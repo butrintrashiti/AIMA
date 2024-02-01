@@ -1,12 +1,12 @@
 import { Get, JsonController } from "routing-controllers";
-import { Inject, Service } from "typedi";
+import { Service } from "typedi";
 import { ReportsService } from "../services/reports.service";
 
 
 @JsonController('/reports')
 @Service()
 export class ReportsController {
-    @Inject() reportsService!: ReportsService;
+    constructor(private reportsService: ReportsService) {}
 
     @Get('/restocking-needs')
     async restockingNeeds() {
