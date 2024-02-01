@@ -15,6 +15,7 @@ dotenv.config();
 
 AppDataSource.initialize()
     .then(() => {
+      
     })
     .catch((error) => console.log(error));
 
@@ -29,9 +30,11 @@ Container.set("SaleRepository", SaleRepository);
 const port = process.env.PORT || 3000;
 
 const app = createExpressServer({
+  routePrefix: '/api/v1',
   controllers: [ProductsController, UsersController, SalesController, ReportsController],
 });
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
 });
+
