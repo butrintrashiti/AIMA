@@ -11,14 +11,14 @@ export class CreateProductDto implements QueryDeepPartialEntity<Product> {
     @IsString()
     description!: string;
 
-    @IsNotEmpty()
     @IsNumber()
     @Min(0)
+    @IsNotEmpty()
     price!: number;
 
-    @IsNotEmpty()
     @IsNumber()
     @Min(0)
+    @IsNotEmpty()
     stock_quantity!: number;
 
     @IsOptional()

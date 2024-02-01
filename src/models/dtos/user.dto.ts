@@ -2,17 +2,17 @@ import { IsNotEmpty, IsEmail, IsEnum, IsNumber, IsUUID } from 'class-validator';
 import { UserRole } from '../../entity/User';
 
 export class UserDto {
-    @IsNotEmpty()
     @IsNumber()
+    @IsNotEmpty()
     id!: number
 
 
-    @IsNotEmpty()
     @IsUUID()
+    @IsNotEmpty()
     uuid!: string;
 
-    @IsNotEmpty()
     @IsEnum(UserRole)
+    @IsNotEmpty()
     role!: UserRole;
 
     @IsNotEmpty()
@@ -21,7 +21,7 @@ export class UserDto {
     @IsNotEmpty()
     lastName!: string;
 
-    @IsNotEmpty()
     @IsEmail()
+    @IsNotEmpty()
     email!: string;
 }

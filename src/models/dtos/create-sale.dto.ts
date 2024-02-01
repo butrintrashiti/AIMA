@@ -5,12 +5,13 @@ import { Transform } from 'class-transformer';
 
 export class CreateSaleDto implements QueryDeepPartialEntity<Sale>  {
 
+    @IsNumber()
     @IsNotEmpty()
     productId!: number;
 
-    @IsNotEmpty()
     @IsInt()
     @Min(1)
+    @IsNotEmpty()
     quantity!: number;
 
     @IsOptional()

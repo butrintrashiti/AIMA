@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import dotenv from "dotenv";
 import { Container } from 'typedi';
-import { useContainer, createExpressServer } from 'routing-controllers';
+import { useContainer, createExpressServer, getMetadataArgsStorage } from 'routing-controllers';
 import { ProductsController } from './controllers/products.controller';
 import { AppDataSource } from './data-source';
 import { UsersController } from './controllers/users.controller';
@@ -12,6 +12,8 @@ import { Product } from './entity/Product';
 import { Sale } from './entity/Sale';
 import { AuthController } from './controllers/auth.controller';
 import { AuthMiddleware } from './middlewares/auth.middleware';
+import * as swaggerUi from "swagger-ui-express";
+import { spec } from './utils/swagger-config';
 
 dotenv.config();
 
@@ -31,11 +33,15 @@ Container.set("SaleRepository", SaleRepository);
 
 const port = process.env.PORT || 3000;
 
-const app = createExpressServer({
+export const routingControllersOptions = {
   routePrefix: '/api/v1',
   controllers: [ProductsController, UsersController, SalesController, ReportsController, AuthController],
   middlewares: [AuthMiddleware]
-});
+};
+
+const app = createExpressServer(routingControllersOptions);
+
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(spec))
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
