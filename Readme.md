@@ -34,6 +34,4 @@
         - else if product didn't have any sales we check if product has less than 10 stock_quantity
     In these cases we mark product as needed for stocking, we didn't need to check if product has 0 capacity since it always is handled by these two cases
 
-#### Note: I didn't use branches though in real project it makes sense to do it I tried to follow small commits and descriptive messages on commit though not always did that
-
-I believe we could have more abstractions and also more unit test
+#### Note: I didn't use branches though in real project it makes sense to do it I tried to follow small commits and descriptive messages on commit though not always did that I believe we could have more abstractions and also more unit test
