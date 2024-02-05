@@ -9,7 +9,9 @@
 
 ## Endpoints:
 
-    First We need to login and get the authorization token
+    First we need to login and get the authorization token
+
+    Note: Need to pass Authentication token for accessing endpoints other than /login
 
     SWAGGER DOCS - http://localhost:3005/docs
     - GET http://localhost:3005/api/v1/products return array of products without users and sales but we can include that in the future
